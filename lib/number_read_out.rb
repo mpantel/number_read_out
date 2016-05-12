@@ -13,11 +13,11 @@ module NumberReadOut
                         units_singular: [ 'THOUSAND', 'THOUSAND', 'MILLION', 'BILLION', 'TRILLION', 'QUADRILLION'],
                         units_plural: [ 'THOUSAND', 'THOUSAND', 'MILLION', 'BILLION', 'TRILLION', 'QUADRILLION']
   },
-                   gr: {male: {hundreds: ['EKATON', 'EKATO', 'ΔΙΑΚΟΣΙA', 'ΤΡΙΑΚΟΣΙΑ', 'ΤΕΤΡΑΚΟΣΙΑ', 'ΠΕΝΤΑΚΟΣΙΑ', 'ΕΞΑΚΟΣΙΑ', 'ΕΠΤΑΚΟΣΙΑ', 'ΟΚΤΑΚΟΣΙΑ', 'ΕΝΝΙΑΚΟΣΙΑ'],
+                   gr: {male: {hundreds: ['ΕΚΑΤΟΝ', 'ΕΚΑΤΟ', 'ΔΙΑΚΟΣΙA', 'ΤΡΙΑΚΟΣΙΑ', 'ΤΕΤΡΑΚΟΣΙΑ', 'ΠΕΝΤΑΚΟΣΙΑ', 'ΕΞΑΚΟΣΙΑ', 'ΕΠΤΑΚΟΣΙΑ', 'ΟΚΤΑΚΟΣΙΑ', 'ΕΝΝΙΑΚΟΣΙΑ'],
                                dozens: ['', 'ΔΕΚΑ', 'ΕΙΚΟΣΙ', 'ΤΡΙΑΝΤΑ', 'ΣΑΡΑΝΤΑ', 'ΠΕΝΗΝΤΑ', 'ΕΞΗΝΤΑ', 'ΕΒΔΟΜΗΝΤΑ', 'ΟΓΔΟΝΤΑ', 'ΕΝΕΝΗΝΤΑ','ΔΕΚΑ', 'ΕΝΤΕΚΑ', 'ΔΩΔΕΚΑ', 'ΔΕΚΑΤΡΙΑ', 'ΔΕΚΑΤΕΣΣΕΡΑ', 'ΔΕΚΑΠΕΝΤΕ', 'ΔΕΚΑΕΞΙ', 'ΔΕΚΑΕΠΤΑ', 'ΔΕΚΑΟΚΤΩ', 'ΔΕΚΑΕΝΝΕΑ'],
                                monads: ['', 'ΕΝΑ', 'ΔΥΟ', 'ΤΡΙΑ', 'ΤΕΣΣΕΡΑ', 'ΠΕΝΤΕ', 'ΕΞΙ', 'ΕΠΤΑ', 'ΟΚΤΩ', 'ΕΝΝΕΑ'],
                    },
-                        female: {hundreds: ['EKATON', 'EKATO', 'ΔΙΑΚΟΣΙEΣ', 'ΤΡΙΑΚΟΣΙEΣ', 'ΤΕΤΡΑΚΟΣΙEΣ', 'ΠΕΝΤΑΚΟΣΙEΣ', 'ΕΞΑΚΟΣΙEΣ', 'ΕΠΤΑΚΟΣΙEΣ', 'ΟΚΤΑΚΟΣΙEΣ', 'ΕΝΝΙΑΚΟΣΙEΣ'],
+                        female: {hundreds: ['ΕΚΑΤΟΝ', 'ΕΚΑΤΟ', 'ΔΙΑΚΟΣΙEΣ', 'ΤΡΙΑΚΟΣΙEΣ', 'ΤΕΤΡΑΚΟΣΙEΣ', 'ΠΕΝΤΑΚΟΣΙEΣ', 'ΕΞΑΚΟΣΙEΣ', 'ΕΠΤΑΚΟΣΙEΣ', 'ΟΚΤΑΚΟΣΙEΣ', 'ΕΝΝΙΑΚΟΣΙEΣ'],
                                  dozens: ['', 'ΔΕΚΑ', 'ΕΙΚΟΣΙ', 'ΤΡΙΑΝΤΑ', 'ΣΑΡΑΝΤΑ', 'ΠΕΝΗΝΤΑ', 'ΕΞΗΝΤΑ', 'ΕΒΔΟΜΗΝΤΑ', 'ΟΓΔΟΝΤΑ', 'ΕΝΕΝΗΝΤΑ','ΔΕΚΑ', 'ΕΝΤΕΚΑ', 'ΔΩΔΕΚΑ', 'ΔΕΚΑΤΡΕΙΣ', 'ΔΕΚΑΤΕΣΣΕΡΙΣ', 'ΔΕΚΑΠEΝΤΕ', 'ΔΕΚΑΕΞΙ', 'ΔΕΚΑΕΠΤΑ', 'ΔΕΚΑΟΚΤΩ', 'ΔΕΚΑΕΝΝΕΑ'],
                                  monads: ['', 'ΜΙΑ', 'ΔΥΟ', 'ΤΡΕΙΣ', 'ΤΕΣΣΕΡΙΣ', 'ΠΕΝΤΕ', 'ΕΞΙ', 'ΕΠΤΑ', 'ΟΚΤΩ', 'ΕΝΝΕΑ'],
                         },
@@ -27,7 +27,7 @@ module NumberReadOut
   }
 
   SpokenCurrencies = {en: {euro: ['EURO','EUROCENTS','EUROCENTS', 'AND','-'],drachmas:['DRACHMAS','CENTS','CENTS','AND','-']},
-                      gr: {euro: ['ΕΥΡΩ','ΕΥΡΩΛΕΠΤΟ','ΕΥΡΩΛΕΠΤΑ', 'ΚΑΙ',''],drachmas:['ΔΡΑΧΜΕΣ','ΛΕΠΤΟ','ΛΕΠΤΑ', 'ΚΑΙ','']}}
+                      gr: {euro: ['ΕΥΡΩ','ΕΥΡΩΛΕΠΤΟ','ΕΥΡΩΛΕΠΤΑ', 'ΚΑΙ',' '],drachmas:['ΔΡΑΧΜΕΣ','ΛΕΠΤΟ','ΛΕΠΤΑ', 'ΚΑΙ',' ']}}
 
   PartOfNumber = [:hundreds, :thousands, :millions, :billions, :trillions, :quadrillions]
 
@@ -60,41 +60,43 @@ module NumberReadOut
     hundreds, teens = triplet.divmod 100
     dozens, monads = teens.divmod 10
 
-    genus = (([:hundreds, :thousands].include? part_of_number) and currency != :euro) ? :female : :male
+    genus = ((([:hundreds, :thousands].include? part_of_number) and currency != :euro ) or (([3,4].include? monads or dozens>0 or hundreds >0) and part_of_number == :thousands ) ) ? :female : :male
 
     textual = ''
 
     if hundreds != 0
-      hundreds_corrector = (teens != 0 and hundreds==1) ? 1 : 0
+      hundreds_corrector = (teens != 0  and hundreds==1 )  ? 1 : 0
       textual += SpokenNumbers[lang][genus][:hundreds][hundreds - hundreds_corrector ]
-      if teens >0
-        textual += ' '
-        textual += SpokenCurrencies[:en][:euro][3] + ' ' if lang == :en
-      end
+
+        textual += ' ' + SpokenCurrencies[:en][:euro][3]  if lang == :en and teens >0
+      textual += ' ' if teens > 0 or part_of_number != :hundreds
+
     end
 
     if teens != 0
       if teens >10 and teens < 20
         textual += SpokenNumbers[lang][genus][:dozens][teens]
+        textual += ' ' if part_of_number != :hundreds
       else
         textual += SpokenNumbers[lang][genus][:dozens][dozens]
+        include_number_one = !(lang == :gr and part_of_number==:thousands and teens==1 and hundreds==0)
         if monads != 0
           textual +=SpokenCurrencies[lang][currency][4] if dozens >1
-          textual += SpokenNumbers[lang][genus][:monads][monads] unless lang == :gr and part_of_number==:thousands and monads==1
-          textual += ' ' if ((monads >1 or lang == :en) and part_of_number==:thousands) or  not [ :hundreds, :thousands].include? part_of_number
-        else
-          textual += ' ' unless  part_of_number == :hundreds
+
+          textual += SpokenNumbers[lang][genus][:monads][monads] if include_number_one
         end
+          textual += ' ' if (part_of_number != :hundreds) and (include_number_one)
       end
     end
 
-    units = ((hundreds == 1 or monads==1) and dozens==0) ? :units_singular : :units_plural
-
     if  part_of_number != :hundreds
+
+      units = ((hundreds == 1 or monads==1) and dozens==0 and not (part_of_number == :thousands and triplet > 1 ))  ? :units_singular : :units_plural
+
       thousands_corrector = (units == :units_singular && genus == :female) ? 1 : 0
       textual += SpokenNumbers[lang][units][PartOfNumber.index(part_of_number) - thousands_corrector]
     end
-    textual += ' ' if triplet >0
+    textual += ' '
     textual
 
   end
