@@ -2,6 +2,8 @@ require "number_read_out/version"
 
 module NumberReadOut
 
+
+
   SpokenNumbers = {en: {male: {hundreds: ['ONE HUNDRED', 'ONE HUNDRED', 'TWO HUNDRED', 'THREE HUNDRED', 'FOUR HUNDRED', 'FIVE HUNDRED', 'SIX HUNDRED', 'SEVEN HUNDRED', 'EIGHT HUNDRED', 'NINE HUNDRED'],
                                dozens: ['', 'TEN', 'TWENTY', 'THIRTY', 'FORTY', 'FIFTY', 'SIXTY', 'SEVENTY', 'EIGHT', 'NINETY','TEN', 'ELEVEN', 'TWELVE', 'THIRTEEN', 'FOURTEEN', 'FIFTEEN', 'SIXTEEN', 'SEVENTEEN', 'EIGHTEEN', 'NINETEEN'],
                                monads: ['', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE'],
@@ -49,6 +51,7 @@ module NumberReadOut
     end
     textual + ' ' +( SpokenCurrencies[lang][currency][douplet == 1 ? 1:2]  )
   end
+  private_class_method :decimal_part_to_text
 
   def self.triplet_to_text(
       triplet,
@@ -100,6 +103,8 @@ module NumberReadOut
     textual
 
   end
+  private_class_method :triplet_to_text
+
 
   def self.full_currency_text(amount_str, currency= :euro,lang= :gr)
 
