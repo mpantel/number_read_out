@@ -59,7 +59,7 @@ or in Geek drachmas:
 
 ### Caveats
 
-For _now_ only positive currencies for up to two decimal digits are supported. Additional decimal digits are trungated.
+For _now_ only positive currencies for up to two decimal digits are supported. Additional decimal digits are truncated.
 
 ## Development
 
