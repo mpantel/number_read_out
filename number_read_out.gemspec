@@ -32,4 +32,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "minitest", "~> 5.0"
   spec.add_development_dependency "tiny_tds", "~> 1.0"
   spec.add_development_dependency "simplecov"
+  spec.add_development_dependency "byebug"
 end

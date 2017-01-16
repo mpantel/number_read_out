@@ -34,6 +34,7 @@ module NumberReadOut
   PartOfNumber = [:hundreds, :thousands, :millions, :billions, :trillions, :quadrillions]
 
   def self.decimal_part_to_text(douplet,currency = :euro,lang = :gr)
+
     return '' if douplet == 0
 
     raise ArgumentError.new("Wrong douplet #{douplet}") if douplet > 99
@@ -115,12 +116,13 @@ module NumberReadOut
     raise ArgumentError.new("Parameter amount: too many dots or commas") if dots >1 or commas >1
 
     # split integer, decimal part
-    integer_part_of_number,decimal_part_of_number = amount_str.split(dots==1? '.': ',')
+    integer_part_of_number, decimal_part_of_number = amount_str.split(dots==1? '.': ',')
+
 
     integer_part_of_number = integer_part_of_number.to_i
     raise ArgumentError.new("Integer part too long") if integer_part_of_number > 999999999999999999
 
-    decimal_part_of_number = (decimal_part_of_number ? decimal_part_of_number[0..1].to_i : 0)
+    decimal_part_of_number = ((decimal_part_of_number || '00') << '0')[0..1].to_i
     decimal_part_text = decimal_part_to_text(decimal_part_of_number, currency,lang)
 
     integer_part_text = ''
