@@ -222,7 +222,9 @@ class NumberReadOutTest < Minitest::Test
         {amount: '9999999999999999,99',currency: :euro,lang: :gr,result: 'ΕΝΝΕΑ ΤΕΤΡΑΚΙΣΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΤΡΙΣΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΔΙΣΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙEΣ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΧΙΛΙΑΔΕΣ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΕΥΡΩ ΚΑΙ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΕΥΡΩΛΕΠΤΑ'},
         {amount: '9999999999999999,99',currency: :drachmas,lang: :gr,result: 'ΕΝΝΕΑ ΤΕΤΡΑΚΙΣΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΤΡΙΣΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΔΙΣΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙEΣ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΧΙΛΙΑΔΕΣ ΕΝΝΙΑΚΟΣΙEΣ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΔΡΑΧΜΕΣ ΚΑΙ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΛΕΠΤΑ'},
         {amount: '999999999999999999,99',currency: :euro,lang: :gr,result: 'ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΤΕΤΡΑΚΙΣΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΤΡΙΣΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΔΙΣΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙEΣ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΧΙΛΙΑΔΕΣ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΕΥΡΩ ΚΑΙ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΕΥΡΩΛΕΠΤΑ'},
-        {amount: '999999999999999999,99',currency: :drachmas,lang: :gr,result: 'ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΤΕΤΡΑΚΙΣΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΤΡΙΣΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΔΙΣΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙEΣ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΧΙΛΙΑΔΕΣ ΕΝΝΙΑΚΟΣΙEΣ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΔΡΑΧΜΕΣ ΚΑΙ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΛΕΠΤΑ'}
+        {amount: '999999999999999999,99',currency: :drachmas,lang: :gr,result: 'ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΤΕΤΡΑΚΙΣΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΤΡΙΣΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΔΙΣΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙΑ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΕΚΑΤΟΜΥΡΙΑ ΕΝΝΙΑΚΟΣΙEΣ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΧΙΛΙΑΔΕΣ ΕΝΝΙΑΚΟΣΙEΣ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΔΡΑΧΜΕΣ ΚΑΙ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΛΕΠΤΑ'},
+        {amount: '11556.8',currency: :euro,lang: :gr,result: 'ΕΝΤΕΚΑ ΧΙΛΙΑΔΕΣ ΠΕΝΤΑΚΟΣΙΑ ΠΕΝΗΝΤΑ ΕΞΙ ΕΥΡΩ ΚΑΙ ΟΓΔΟΝΤΑ ΕΥΡΩΛΕΠΤΑ'}
+
 
     ]
 
@@ -274,7 +276,7 @@ class NumberReadOutTest < Minitest::Test
         {amount: '50',currency: :euro,lang: :en,result: 'FIFTY EURO'},
         {amount: '60',currency: :euro,lang: :en,result: 'SIXTY EURO'},
         {amount: '70',currency: :euro,lang: :en,result: 'SEVENTY EURO'},
-        {amount: '80',currency: :euro,lang: :en,result: 'EIGHT EURO'},
+        {amount: '80',currency: :euro,lang: :en,result: 'EIGHTY EURO'},
         {amount: '90',currency: :euro,lang: :en,result: 'NINETY EURO'},
         {amount: '100',currency: :euro,lang: :en,result: 'ONE HUNDRED EURO'},
         {amount: '101',currency: :euro,lang: :en,result: 'ONE HUNDRED AND ONE EURO'},
@@ -311,7 +313,7 @@ class NumberReadOutTest < Minitest::Test
         {amount: '150',currency: :euro,lang: :en,result: 'ONE HUNDRED AND FIFTY EURO'},
         {amount: '160',currency: :euro,lang: :en,result: 'ONE HUNDRED AND SIXTY EURO'},
         {amount: '170',currency: :euro,lang: :en,result: 'ONE HUNDRED AND SEVENTY EURO'},
-        {amount: '180',currency: :euro,lang: :en,result: 'ONE HUNDRED AND EIGHT EURO'},
+        {amount: '180',currency: :euro,lang: :en,result: 'ONE HUNDRED AND EIGHTY EURO'},
         {amount: '190',currency: :euro,lang: :en,result: 'ONE HUNDRED AND NINETY EURO'},
         {amount: '200',currency: :euro,lang: :en,result: 'TWO HUNDRED EURO'},
         {amount: '300',currency: :euro,lang: :en,result: 'THREE HUNDRED EURO'},
@@ -393,7 +395,8 @@ class NumberReadOutTest < Minitest::Test
         {amount: '2000000000000000',currency: :euro,lang: :en,result: 'TWO QUADRILLION EURO'},
         {amount: '1234567890123456,12',currency: :euro,lang: :en,result: 'ONE QUADRILLION TWO HUNDRED AND THIRTY-FOUR TRILLION FIVE HUNDRED AND SIXTY-SEVEN BILLION EIGHT HUNDRED AND NINETY MILLION ONE HUNDRED AND TWENTY-THREE THOUSAND FOUR HUNDRED AND FIFTY-SIX EURO AND TWELVE EUROCENTS'},
         {amount: '9999999999999999,99',currency: :euro,lang: :en,result: 'NINE QUADRILLION NINE HUNDRED AND NINETY-NINE TRILLION NINE HUNDRED AND NINETY-NINE BILLION NINE HUNDRED AND NINETY-NINE MILLION NINE HUNDRED AND NINETY-NINE THOUSAND NINE HUNDRED AND NINETY-NINE EURO AND NINETY-NINE EUROCENTS'},
-        {amount: '999999999999999999,99',currency: :euro,lang: :en,result: 'NINE HUNDRED AND NINETY-NINE QUADRILLION NINE HUNDRED AND NINETY-NINE TRILLION NINE HUNDRED AND NINETY-NINE BILLION NINE HUNDRED AND NINETY-NINE MILLION NINE HUNDRED AND NINETY-NINE THOUSAND NINE HUNDRED AND NINETY-NINE EURO AND NINETY-NINE EUROCENTS'}
+        {amount: '999999999999999999,99',currency: :euro,lang: :en,result: 'NINE HUNDRED AND NINETY-NINE QUADRILLION NINE HUNDRED AND NINETY-NINE TRILLION NINE HUNDRED AND NINETY-NINE BILLION NINE HUNDRED AND NINETY-NINE MILLION NINE HUNDRED AND NINETY-NINE THOUSAND NINE HUNDRED AND NINETY-NINE EURO AND NINETY-NINE EUROCENTS'},
+        {amount: '11556.8',currency: :euro,lang: :en,result: 'ELEVEN THOUSAND FIVE HUNDRED AND FIFTY-SIX EURO AND EIGHTY EUROCENTS'}
 
     ]
 
