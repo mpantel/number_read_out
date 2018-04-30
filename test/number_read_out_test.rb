@@ -7,6 +7,7 @@ class NumberReadOutTest < Minitest::Test
 
   def test_amount_generation_gr
     tests = [
+        {amount: '-1',currency: :euro,lang: :gr,result: 'ΜΕΙΟΝ ΕΝΑ ΕΥΡΩ'},
         {amount: '1',currency: :euro,lang: :gr,result: 'ΕΝΑ ΕΥΡΩ'},
         {amount: '1.01',currency: :euro,lang: :gr,result: 'ΕΝΑ ΕΥΡΩ ΚΑΙ ΕΝΑ ΕΥΡΩΛΕΠΤΟ'},
         {amount: '1.01',currency: :drachmas,lang: :gr,result: 'ΜΙΑ ΔΡΑΧΜΕΣ ΚΑΙ ΕΝΑ ΛΕΠΤΟ'},
@@ -19,6 +20,7 @@ class NumberReadOutTest < Minitest::Test
         {amount: '10.13',currency: :drachmas,lang: :gr,result: 'ΔΕΚΑ ΔΡΑΧΜΕΣ ΚΑΙ ΔΕΚΑΤΡΙΑ ΛΕΠΤΑ'},
         {amount: '10.21',currency: :euro,lang: :gr,result: 'ΔΕΚΑ ΕΥΡΩ ΚΑΙ ΕΙΚΟΣΙ ΕΝΑ ΕΥΡΩΛΕΠΤΑ'},
         {amount: '10.21',currency: :drachmas,lang: :gr,result: 'ΔΕΚΑ ΔΡΑΧΜΕΣ ΚΑΙ ΕΙΚΟΣΙ ΕΝΑ ΛΕΠΤΑ'},
+        {amount: '-10.21',currency: :drachmas,lang: :gr,result: 'ΜΕΙΟΝ ΔΕΚΑ ΔΡΑΧΜΕΣ ΚΑΙ ΕΙΚΟΣΙ ΕΝΑ ΛΕΠΤΑ'},
         {amount: '13.99',currency: :euro,lang: :gr,result: 'ΔΕΚΑΤΡΙΑ ΕΥΡΩ ΚΑΙ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΕΥΡΩΛΕΠΤΑ'},
         {amount: '13.99',currency: :drachmas,lang: :gr,result: 'ΔΕΚΑΤΡΕΙΣ ΔΡΑΧΜΕΣ ΚΑΙ ΕΝΕΝΗΝΤΑ ΕΝΝΕΑ ΛΕΠΤΑ'},
         {amount: '1',currency: :drachmas,lang: :gr,result: 'ΜΙΑ ΔΡΑΧΜΕΣ'},
@@ -171,6 +173,8 @@ class NumberReadOutTest < Minitest::Test
         {amount: '101000',currency: :drachmas,lang: :gr,result: 'ΕΚΑΤΟΝ ΜΙΑ ΧΙΛΙΑΔΕΣ ΔΡΑΧΜΕΣ'},
         {amount: '101001',currency: :euro,lang: :gr,result: 'ΕΚΑΤΟΝ ΜΙΑ ΧΙΛΙΑΔΕΣ ΕΝΑ ΕΥΡΩ'},
         {amount: '101001',currency: :drachmas,lang: :gr,result: 'ΕΚΑΤΟΝ ΜΙΑ ΧΙΛΙΑΔΕΣ ΜΙΑ ΔΡΑΧΜΕΣ'},
+        {amount: ' - 101001',currency: :drachmas,lang: :gr,result: 'ΜΕΙΟΝ ΕΚΑΤΟΝ ΜΙΑ ΧΙΛΙΑΔΕΣ ΜΙΑ ΔΡΑΧΜΕΣ'},
+        {amount: '- 101001 ',currency: :drachmas,lang: :gr,result: 'ΜΕΙΟΝ ΕΚΑΤΟΝ ΜΙΑ ΧΙΛΙΑΔΕΣ ΜΙΑ ΔΡΑΧΜΕΣ'},
         {amount: '1000000',currency: :euro,lang: :gr,result: 'ΕΝΑ ΕΚΑΤΟΜΥΡΙΟ ΕΥΡΩ'},
         {amount: '1000000',currency: :drachmas,lang: :gr,result: 'ΕΝΑ ΕΚΑΤΟΜΥΡΙΟ ΔΡΑΧΜΕΣ'},
         {amount: '1001001',currency: :euro,lang: :gr,result: 'ΕΝΑ ΕΚΑΤΟΜΥΡΙΟ ΧΙΛΙΑ ΕΝΑ ΕΥΡΩ'},
@@ -236,6 +240,7 @@ class NumberReadOutTest < Minitest::Test
 
   def test_amount_generation_en
     tests = [
+        {amount: '-1',currency: :euro,lang: :en,result: 'MINUS ONE EURO'},
         {amount: '1',currency: :euro,lang: :en,result: 'ONE EURO'},
         {amount: '1.01',currency: :euro,lang: :en,result: 'ONE EURO AND ONE EUROCENTS'},
         {amount: '1.01',currency: :drachmas,lang: :en,result: 'ONE DRACHMAS AND ONE CENTS'},

@@ -13,7 +13,8 @@ module NumberReadOut
                                  monads: ['', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE'],
                         },
                         units_singular: [ 'THOUSAND', 'THOUSAND', 'MILLION', 'BILLION', 'TRILLION', 'QUADRILLION'],
-                        units_plural: [ 'THOUSAND', 'THOUSAND', 'MILLION', 'BILLION', 'TRILLION', 'QUADRILLION']
+                        units_plural: [ 'THOUSAND', 'THOUSAND', 'MILLION', 'BILLION', 'TRILLION', 'QUADRILLION'],
+  negative: 'MINUS'
   },
                    gr: {male: {hundreds: ['ΕΚΑΤΟΝ', 'ΕΚΑΤΟ', 'ΔΙΑΚΟΣΙA', 'ΤΡΙΑΚΟΣΙΑ', 'ΤΕΤΡΑΚΟΣΙΑ', 'ΠΕΝΤΑΚΟΣΙΑ', 'ΕΞΑΚΟΣΙΑ', 'ΕΠΤΑΚΟΣΙΑ', 'ΟΚΤΑΚΟΣΙΑ', 'ΕΝΝΙΑΚΟΣΙΑ'],
                                dozens: ['', 'ΔΕΚΑ', 'ΕΙΚΟΣΙ', 'ΤΡΙΑΝΤΑ', 'ΣΑΡΑΝΤΑ', 'ΠΕΝΗΝΤΑ', 'ΕΞΗΝΤΑ', 'ΕΒΔΟΜΗΝΤΑ', 'ΟΓΔΟΝΤΑ', 'ΕΝΕΝΗΝΤΑ','ΔΕΚΑ', 'ΕΝΤΕΚΑ', 'ΔΩΔΕΚΑ', 'ΔΕΚΑΤΡΙΑ', 'ΔΕΚΑΤΕΣΣΕΡΑ', 'ΔΕΚΑΠΕΝΤΕ', 'ΔΕΚΑΕΞΙ', 'ΔΕΚΑΕΠΤΑ', 'ΔΕΚΑΟΚΤΩ', 'ΔΕΚΑΕΝΝΕΑ'],
@@ -24,7 +25,8 @@ module NumberReadOut
                                  monads: ['', 'ΜΙΑ', 'ΔΥΟ', 'ΤΡΕΙΣ', 'ΤΕΣΣΕΡΙΣ', 'ΠΕΝΤΕ', 'ΕΞΙ', 'ΕΠΤΑ', 'ΟΚΤΩ', 'ΕΝΝΕΑ'],
                         },
                         units_singular: ['ΧΙΛΙΕΣ', 'ΧΙΛΙΑ', 'ΕΚΑΤΟΜΥΡΙΟ', 'ΔΙΣΕΚΑΤΟΜΥΡΙΟ', 'ΤΡΙΣΕΚΑΤΟΜΥΡΙΟ', 'ΤΕΤΡΑΚΙΣΕΚΑΤΟΜΥΡΙΟ'],
-                        units_plural: [ 'ΧΙΛΙΑΔΕΣ', 'ΧΙΛΙΑΔΕΣ', 'ΕΚΑΤΟΜΥΡΙΑ', 'ΔΙΣΕΚΑΤΟΜΥΡΙΑ', 'ΤΡΙΣΕΚΑΤΟΜΥΡΙΑ', 'ΤΕΤΡΑΚΙΣΕΚΑΤΟΜΥΡΙΑ']
+                        units_plural: [ 'ΧΙΛΙΑΔΕΣ', 'ΧΙΛΙΑΔΕΣ', 'ΕΚΑΤΟΜΥΡΙΑ', 'ΔΙΣΕΚΑΤΟΜΥΡΙΑ', 'ΤΡΙΣΕΚΑΤΟΜΥΡΙΑ', 'ΤΕΤΡΑΚΙΣΕΚΑΤΟΜΥΡΙΑ'],
+                   negative: 'ΜΕΙΟΝ'
                    }
   }
 
@@ -106,11 +108,15 @@ module NumberReadOut
   end
   private_class_method :triplet_to_text
 
+  def self.sing_part
 
+  end
   def self.full_currency_text(amount_str, currency= :euro,lang= :gr)
 
     raise ArgumentError.new("Parameter amount: expecting string") unless amount_str.is_a?(String)
-
+    amount_str = amount_str.tr(' ','')
+    negative = (amount_str.to_f < 0)
+    amount_str = amount_str.tr('-','')
     dots = amount_str.count('.')
     commas = amount_str.count(',')
     raise ArgumentError.new("Parameter amount: too many dots or commas") if dots >1 or commas >1
@@ -134,7 +140,7 @@ module NumberReadOut
     end
     raise ArgumentError.new("Number too long to parse...") if integer_part_of_number >0
 
-    integer_part_text + ((integer_part_text !='' and decimal_part_text !='')?  ' ' + SpokenCurrencies[lang][currency][3] + ' ' : '')  +decimal_part_text
+    (negative ? SpokenNumbers[lang][:negative] + ' ' : '') + integer_part_text + ((integer_part_text !='' and decimal_part_text !='')?  ' ' + SpokenCurrencies[lang][currency][3] + ' ' : '')  +decimal_part_text
 
   end
 
